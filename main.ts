@@ -21,7 +21,13 @@ function load(url: string) {
 
         xhr.open('GET', url);
         xhr.send();
-    }).retry(3);
+    }).retryWhen(retryStrategy());
+}
+
+function retryStrategy () {
+    return function (errors) {
+        return errors.delay(1000);
+    };
 }
 
 function renderMovies(movies) {
