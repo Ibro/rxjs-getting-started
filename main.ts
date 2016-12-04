@@ -9,7 +9,8 @@ let source = Observable
             y: e.clientY
         };
     })
-    .filter(value => value.x < 500);
+    .filter(value => value.x < 500)
+    .delay(300);
 
 
 function onNext(value) {
