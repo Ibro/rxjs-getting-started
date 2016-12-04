@@ -1,5 +1,4 @@
 import { Observable } from 'rxjs';
-import { render } from "typings/dist/support/cli";
 
 let output = document.getElementById('output');
 let button = document.getElementById('button');
@@ -11,9 +10,13 @@ function load(url: string) {
         let xhr = new XMLHttpRequest();
 
         xhr.addEventListener('load', () => {
-            let data = JSON.parse(xhr.responseText);
-            observer.next(data);
-            observer.complete();
+            if (xhr.status >= 200 && xhr.status < 300) {
+                let data = JSON.parse(xhr.responseText);
+                observer.next(data);
+                observer.complete();
+            } else {
+                observer.error(xhr.statusText);
+            }
         });
 
         xhr.open('GET', url);
@@ -34,7 +37,7 @@ function renderMovies(movies) {
 //     .subscribe(o => console.log(o));
 
 
-click.flatMap(e => load('movies.json'))
+click.flatMap(e => load('moviess.json'))
     .subscribe(renderMovies,
         e => console.log(`error: ${e}`),
         () => console.log('complete')
