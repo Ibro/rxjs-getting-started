@@ -26,7 +26,12 @@ function load(url: string) {
 
 function retryStrategy () {
     return function (errors) {
-        return errors.delay(1000);
+        return errors
+            .scan((accumulator, value) => {
+                console.log(accumulator, value);
+                return accumulator + 1;
+            }, 1)
+            .delay(1000);
     };
 }
 
