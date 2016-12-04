@@ -9,7 +9,7 @@ let source = Observable.create(observer => {
    let index = 0;
 
     let produceValue = () => {
-        observer.next(numbers[index++])
+        observer.next(numbers[index++]);
 
         if(index < numbers.length) {
             setTimeout(produceValue, 250);
@@ -20,7 +20,7 @@ let source = Observable.create(observer => {
 
     produceValue();
 
-}).map(n => n * 2);
+}).map(n => n * 2).filter(n => n > 4);
 
 
 source.subscribe(
