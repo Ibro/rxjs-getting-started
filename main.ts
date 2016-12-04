@@ -21,8 +21,7 @@ function load(url: string) {
 
         xhr.open('GET', url);
         xhr.send();
-    });
-
+    }).retry(3);
 }
 
 function renderMovies(movies) {
