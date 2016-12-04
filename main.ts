@@ -21,18 +21,18 @@ function load(url: string) {
 
         xhr.open('GET', url);
         xhr.send();
-    }).retryWhen(retryStrategy());
+    }).retryWhen(retryStrategy(3, 1500));
 }
 
-function retryStrategy () {
+function retryStrategy (attempts = 4, delay = 1000) {
     return function (errors) {
         return errors
             .scan((accumulator, value) => {
                 console.log(accumulator, value);
                 return accumulator + 1;
             }, 0)
-            .takeWhile(acc => acc < 4)
-            .delay(1000);
+            .takeWhile(acc => acc < attempts)
+            .delay(delay);
     };
 }
 
