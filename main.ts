@@ -30,7 +30,8 @@ function retryStrategy () {
             .scan((accumulator, value) => {
                 console.log(accumulator, value);
                 return accumulator + 1;
-            }, 1)
+            }, 0)
+            .takeWhile(acc => acc < 4)
             .delay(1000);
     };
 }
